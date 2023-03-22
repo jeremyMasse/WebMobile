@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { ScrollView, Image } from 'react-native';
+import { ScrollView } from 'react-native';
 import styled from 'styled-components';
 import {FavoritesContext} from '../contexts/FavoritesContext';
 import globalStyledComponents from '../styles/globalStyledComponents'
@@ -13,9 +13,6 @@ const ExerciceDetails = ({ route }) => {
 
   // L'api renvoie une description avec des listes directement intégrés dedans donc je reformate la description pour qu'elle s'affiche correctement
   const [descriptionList, setDescriptionList] = useState(null);
-
-  // Permet d'afficher le bon boutons des favoris (ajout ou suppression)
-  // const [isAlreadyInFavorites, setIsAlreadyInFavorites] = useState(false);
 
   //Récupère les fonctions du contexte favoris
   const {addFavorite, removeFavorite, isAlreadyInFavorites} = useContext(FavoritesContext);

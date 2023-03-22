@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {FlatList, View } from 'react-native';
+import {FlatList, View, ActivityIndicator } from 'react-native';
 import {FavoritesContext} from '../contexts/FavoritesContext';
 import { ToasterContext } from '../contexts/ToasterContext';
 import api from '../services/api';
@@ -13,14 +13,19 @@ import globalStyledComponents from '../styles/globalStyledComponents'
 const ExerciseList = () => {
   const [exercises, setExercises] = useState([]);
   const [filteredExercises, setFilteredExercises] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {addFavorite} = useContext(FavoritesContext);
   const { addMessage } = useContext(ToasterContext);
 
   useEffect(() => {
+    setIsLoading(true);
     api.getExercises().then(data => {
       setExercises(data);
       setFilteredExercises(data);
+    })
+    .finally(() => {
+      setIsLoading(false);
     });
   }, []);
 
@@ -48,11 +53,16 @@ const ExerciseList = () => {
   return (
     <View>
       <ExerciseSearchBar onSearch={handleSearch} />
-      <FlatList
-        data={filteredExercises}
-        renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
-      />
+      { isLoading ?
+        <ActivityIndicator size="large" color="#0000ff" />
+        : 
+        <FlatList
+          data={filteredExercises}
+          renderItem={renderItem}
+          keyExtractor={item => item.id.toString()}
+        />
+      }
+      
     </View>
   );
 };

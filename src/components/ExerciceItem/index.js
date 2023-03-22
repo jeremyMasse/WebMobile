@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, ActivityIndicator} from 'react-native';
 import styled from 'styled-components';
 import {useNavigation} from '@react-navigation/native';
 import api from '../../services/api';
@@ -11,11 +11,14 @@ const ExerciceItem = ({exercice, children}) => {
   // Permet d'utiliser la navigation pour rediriger vers la page de détail d'un exercice au clic sur un exercice
   const navigation = useNavigation();
   const [urlImage, setUrlImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     // Récupère l'image de l'exercice
     api.getImageOfExercise(exercice.exercise_base).then(data => {
       setUrlImage(data);
+      setIsLoading(false);
     });
   }, [exercice]);
 
@@ -26,13 +29,17 @@ const ExerciceItem = ({exercice, children}) => {
       }>
       <ExerciseCard>
         <ImageContainer>
-          {urlImage !== null && (
-            <ExerciseImage
-              source={{
-                uri: urlImage,
-              }}
-            />
-          )}
+          { isLoading ?
+            <ActivityIndicator size="large" color="#0000ff" />
+          : 
+            urlImage !== null && (
+              <ExerciseImage
+                source={{
+                  uri: urlImage,
+                }}
+              />
+            )
+          }
         </ImageContainer>
         <ExerciseTitle>{exercice.name}</ExerciseTitle>
         {children}
