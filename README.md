@@ -13,3 +13,4 @@ Ce projet contient :
 - Un context pour les toaster ( messages pour utilisateurs lorsqu'une action est faite)
 - Des styled-components en global, réutilisé à plusieurs endroit
 - Un fichier des services pour les requêtes
+![MGku1Fh](https://user-images.githubusercontent.com/48833583/227309765-749b5c65-7f9b-446d-97b6-2bbed4acbd90.gif)
