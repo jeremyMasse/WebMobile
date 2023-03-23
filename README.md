@@ -2,6 +2,7 @@
 Application de sport
 
 Projet fais par moi Jérémy Massé.
+A tester sous android
 
 Ce projet contient : 
 - Une page de listing des exercices.
